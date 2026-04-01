@@ -1,0 +1,132 @@
+/* Основні налаштування */
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f8fafc;
+    margin: 0;
+    padding: 20px;
+    color: #1e293b;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+h1, h2, h3 {
+    text-align: center;
+    color: #0f172a;
+}
+
+/* Форма вводу */
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+input, select {
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+input:focus {
+    border-color: #3b82f6;
+    outline: none;
+}
+
+/* Кнопки */
+.btns {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-add { background-color: #10b981; color: white; width: 100%; grid-column: span 2; }
+.btn-analyze { background-color: #3b82f6; color: white; }
+.btn-matrix { background-color: #8b5cf6; color: white; }
+.btn-alt { background-color: #f59e0b; color: white; margin-top: 15px; }
+
+button:hover { opacity: 0.9; transform: translateY(-1px); }
+
+/* Картки результатів */
+.best-card {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 20px;
+}
+
+.alt-card {
+    background: #fffbeb;
+    border: 1px solid #fef3c7;
+    padding: 15px;
+    margin-top: 10px;
+    border-radius: 8px;
+}
+
+/* СТИЛІ МАТРИЦІ (ТАБЛИЦІ) - ВИПРАВЛЕНО */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: white;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+th {
+    background-color: #1e293b;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 14px;
+    text-align: left;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+}
+
+td {
+    padding: 14px;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 14px;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover {
+    background-color: #f8fafc;
+}
+
+/* Підсвітка фінального балу */
+td:last-child {
+    font-weight: bold;
+    color: #3b82f6;
+    background-color: #f0f9ff;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .grid { grid-template-columns: 1fr; }
+}

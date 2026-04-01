@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>СППР: Вибір Авто</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Система вибору автомобіля</h1>
+        <form id="carForm">
+            <div class="grid">
+                <input type="text" id="brand" placeholder="Марка" required>
+                <input type="text" id="model" placeholder="Модель" required>
+                <input type="number" id="year" placeholder="Рік" required>
+                <input type="number" id="price" placeholder="Ціна (грн)" required>
+                <input type="number" id="reliability" placeholder="Надійність (км)" required>
+                <input type="number" id="fuel" step="0.1" placeholder="Витрати (л)" required>
+                <select id="carClass" required>
+                    <option value="економ">Економ</option>
+                    <option value="комфорт">Комфорт</option>
+                    <option value="бізнес">Бізнес</option>
+                </select>
+                <input type="number" id="maint" placeholder="Сервіс (грн)" required>
+                <input type="number" id="ins" placeholder="Страховка (грн)" required>
+            </div>
+            <button type="submit" class="btn-add">Зберегти в БД</button>
+        </form>
+
+        <div class="actions">
+            <button onclick="analyze()" class="btn-primary">Аналізувати</button>
+            <button onclick="showMatrix()" class="btn-secondary">Матриця оцінювання</button>
+        </div>
+
+        <div id="results"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
