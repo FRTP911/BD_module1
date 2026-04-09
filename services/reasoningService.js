@@ -1,31 +1,68 @@
+const { CRITERIA } = require("../config/constants");
+
 class ReasoningService {
   getReason(car, allCars) {
     if (!allCars.length) return "";
 
-    const avg = (key) =>
-      allCars.reduce((a, b) => a + b[key], 0) / allCars.length;
+    const rawCars = allCars.map((c) => (c.toObject ? c.toObject() : c));
 
-    const advantages = [
-      {
-        name: "вигідна ціна",
-        value: avg("price") - car.price,
-      },
-      {
-        name: "висока надійність",
-        value: car.engineReliability - avg("engineReliability"),
-      },
-      {
-        name: "економне паливо",
-        value: avg("fuelConsumption") - car.fuelConsumption,
-      },
-    ];
+    // 1. знаходимо min/max для нормалізації
+    const limits = {};
+    for (const key in CRITERIA) {
+      const values = rawCars.map((c) => Number(c[key]) || 0);
+      limits[key] = {
+        min: Math.min(...values),
+        max: Math.max(...values),
+      };
+    }
 
-    const best = advantages
-      .filter(a => a.value > 0)
-      .map(a => a.name);
+    // 2. рахуємо внески критеріїв
+    const contributions = [];
 
-    return best.length
-      ? `Переваги: ${best.join(", ")}`
+    for (const key in CRITERIA) {
+      const { weight, type } = CRITERIA[key];
+      const { min, max } = limits[key];
+      const val = Number(car[key]) || 0;
+
+      let normalized = 1;
+
+      if (max !== min) {
+        normalized =
+          type === "max"
+            ? (val - min) / (max - min)
+            : (max - val) / (max - min);
+      }
+
+      const contribution = normalized * weight;
+
+      contributions.push({
+        key,
+        contribution,
+      });
+    }
+
+    // 3. беремо топ-3 критерії
+    const top = contributions
+      .sort((a, b) => b.contribution - a.contribution)
+      .slice(0, 3);
+
+    const namesMap = {
+      price: "Вигідна ціна",
+      engineReliability: "Надійність двигуна",
+      fuelConsumption: "Витрата палива",
+      maintenanceCost: "Сервіс",
+      insuranceCost: "Страхування",
+    };
+
+    const reasons = top.map((t) => {
+      const label = namesMap[t.key] || t.key;
+      const value = car[t.key];
+
+      return `${label}: ${value}`;
+    });
+
+    return reasons.length
+      ? `Топ характеристики: ${reasons.join(", ")}`
       : "Збалансований варіант";
   }
 }
